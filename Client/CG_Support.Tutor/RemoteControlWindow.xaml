@@ -1,0 +1,102 @@
+<Window x:Class="CG_Support.Tutor.RemoteControlWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Control Remoto" Height="600" Width="1000"
+        Background="#0F1018"
+        WindowStartupLocation="CenterOwner">
+    
+    <Window.Resources>
+        <!-- Estilo de Botón Premium Redondeado -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#25283C"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="4" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#353A56"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ActiveToggle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="#25283C"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border CornerRadius="4" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#E63946"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#353A56"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Control bar -->
+            <RowDefinition Height="50"/>
+            <!-- Stream area -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Control Bar -->
+        <Border Grid.Row="0" Background="#161824" BorderBrush="#25283C" BorderThickness="0,0,0,1">
+            <Grid Margin="15,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="CONTROL REMOTO ACTIVO -" Foreground="#8B8D98" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtStudentName" Text="LAB_PC_USUARIO_1" Foreground="#FFFFFF" FontSize="13" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtStudentIp" Text="(192.168.1.50)" Foreground="#404354" FontSize="11" Margin="8,1,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Botón para alternar bloqueo de mouse y teclado del estudiante -->
+                    <ToggleButton x:Name="BtnBlockInput" Content="🚫 Bloquear Entrada Estudiante" Style="{StaticResource ActiveToggle}" Checked="BtnBlockInput_Checked" Unchecked="BtnBlockInput_Unchecked" Margin="0,0,8,0"/>
+                    <Button Content="❌ Finalizar Control" Style="{StaticResource ModernButton}" Click="BtnClose_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Screen Stream Display -->
+        <Border Grid.Row="1" Background="#0C0D13" ClipToBounds="True">
+            <Image x:Name="ImgRemoteScreen" Stretch="Uniform" 
+                   MouseMove="ImgRemoteScreen_MouseMove" 
+                   MouseDown="ImgRemoteScreen_MouseDown" 
+                   MouseUp="ImgRemoteScreen_MouseUp"
+                   Cursor="Hand"/>
+        </Border>
+    </Grid>
+</Window>
